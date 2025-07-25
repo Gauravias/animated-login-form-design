@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Jobpilot</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* CSS Code */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            /* Added a subtle texture to make the glassmorphism stand out */
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .signup-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            /* Glassmorphism Base */
+            background: rgba(25, 25, 25, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            overflow: hidden;
+        }
+
+        /* Form Section Styling */
+        .form-section {
+            flex: 1;
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        header .logo img {
+            width: 35px;
+        }
+
+        header .logo span {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        main h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .account-type {
+            display: flex;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #a0a0a0;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #1967d2;
+            color: #fff;
+        }
+
+        .tab-btn:not(.active):hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Form switching styling */
+        .form-wrapper {
+            display: none;
+        }
+        .form-wrapper.active {
+            display: block;
+        }
+
+        .social-signup {
+            margin-top: 25px;
+        }
+        .social-signup p {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-btn .fa-linkedin-in { color: #0a66c2; }
+        .social-btn .fa-google { color: #db4437; }
+
+        form .input-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .input-field {
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .input-field.full-width {
+            width: 100%;
+        }
+
+        .input-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #d0d0d0;
+            margin-bottom: 5px;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .input-field input::placeholder {
+            color: #888;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #1967d2;
+            box-shadow: 0 0 0 2px rgba(25, 103, 210, 0.5);
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .create-account-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1967d2;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-account-btn:hover {
+            background-color: #135abc;
+        }
+
+        .create-account-btn .fa-arrow-right {
+            margin-left: 8px;
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        footer .login-link {
+            text-align: center;
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #d0d0d0;
+        }
+
+        footer a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer .terms {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Video & Info Section Styling */
+        .info-section {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 50px;
+            color: #fff;
+            min-height: 700px;
+        }
+
+        .info-section video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .testimonial-box {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-box .quote {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-box .author h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .testimonial-box .author p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .signup-container {
+                flex-direction: column;
+            }
+            .form-section {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            }
+            .info-section {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 0;
+            }
+            .signup-container {
+                border-radius: 0;
+                min-height: 100vh;
+                border: none;
+            }
+            .form-section {
+                padding: 30px 20px;
+            }
+            .social-buttons, form .input-group {
+                flex-direction: column;
+            }
+            .info-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-container">
+        <div class="form-section">
+            <header>
+                <div class="logo">
+                    <img src="https://i.ibb.co/6Pqf9fL/jobpilot-logo.png" alt="Jobpilot Logo">
+                    <span>Jobpilot</span>
+                </div>
+            </header>
+
+            <main>
+                <h2>Create Account</h2>
+                <div class="account-type">
+                    <button class="tab-btn active" data-target="#candidateForm">
+                        <i class="fa-solid fa-user-tie"></i> Candidate
+                    </button>
+                    <button class="tab-btn" data-target="#employerForm">
+                        <i class="fa-solid fa-building"></i> Employer
+                    </button>
+                </div>
+
+                <div id="candidateForm" class="form-wrapper active">
+                    <form action="#">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" placeholder="Full name">
+                            </div>
+                            <div class="input-field">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="input-field full-width">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" placeholder="Email address">
+                        </div>
+                        <div class="input-field full-width">
+                            <label for="password">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="password" placeholder="Enter password">
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="input-field full-width">
+                            <label for="confirm-password">Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="confirm-password" placeholder="Enter password again">
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="create-account-btn">Create Account <i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+                </div>
+
+                <div id="employerForm" class="form-wrapper">
+                    <form action="#">
+                        <div class="input-field full-width">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name" placeholder="Your company's name">
+                        </div>
+                        <div class="input-field full-width">
+                            <label for="company-email">Company Email Address</label>
+                            <input type="email" id="company-email" placeholder="company@example.com">
+                        </div>
+                         <div class="input-field full-width">
+                            <label for="emp-password">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="emp-password" placeholder="Enter password">
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="input-field full-width">
+                            <label for="emp-confirm-password">Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="emp-confirm-password" placeholder="Enter password again">
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="create-account-btn">Create Company Account <i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+                </div>
+                
+                <div class="social-signup">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <button class="social-btn linkedin"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</button>
+                        <button class="social-btn google"><i class="fa-brands fa-google"></i> Google</button>
+                    </div>
+                </div>
+
+                <footer>
+                    <p class="login-link">Already have an account? <a href="#">Login</a></p>
+                    <p class="terms">By clicking "Create Account/Google/Linkedin" above, you acknowledge that you have read and understood, and agree to Jobpilot's <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+                </footer>
+            </main>
+        </div>
+
+        <div class="info-section">
+            <video autoplay loop muted playsinline>
+                <source src="ui.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="testimonial-box">
+                <p class="quote">"Thanks to this job portal website, I quickly found my dream job! Easy to navigate, countless opportunities, and excellent results. Highly recommended!"</p>
+                <div class="author">
+                    <h4>Emily Kuper</h4>
+                    <p>Satisfied, Job-Seeker</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Code
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Form Tabbing Functionality ---
+            const tabs = document.querySelectorAll('.tab-btn');
+            const formWrappers = document.querySelectorAll('.form-wrapper');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(item => item.classList.remove('active'));
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+
+                    const targetId = tab.getAttribute('data-target');
+                    const targetForm = document.querySelector(targetId);
+                    
+                    // Hide all forms
+                    formWrappers.forEach(form => form.classList.remove('active'));
+                    // Show the target form
+                    if (targetForm) {
+                        targetForm.classList.add('active');
+                    }
+                });
+            });
+
+
+            // --- Password Visibility Toggle Functionality ---
+            const toggleIcons = document.querySelectorAll('.toggle-password');
+
+            toggleIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const passwordWrapper = icon.parentElement;
+                    const passwordInput = passwordWrapper.querySelector('input');
+                    
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
